@@ -1,0 +1,33 @@
+@(message: String, group: Iterable[(String,com.sysiq.common.parsers.TestParsers.Page,Option[(String, String)])])
+@import com.sysiq.common.parsers.TestParsers.Page
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@message</title>
+        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+    </head>
+    <body>
+    	<ul>
+    		@for(t <- group){
+    			<li><b><a id="@t._1">@t._1</a></b><br/>
+    			Maps to:
+    			<ul><li>@t._3.getOrElse("","")._2</li></ul>
+    			Imported by:
+    			<ul>
+    				@for(p <- t._2.importedBy){
+    					<li><a href="#@p.url">@p.url</a></li>
+    				}
+    			</ul>
+    			Imports:
+    			<ul>
+    				@for(p <- t._2.imports){
+    					<li><a href="#@p.url">@p.url</a></li>
+    				}
+	 			</ul>
+    				
+    		}
+    	</ul>
+    </body>
+</html>
